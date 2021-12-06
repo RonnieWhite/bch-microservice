@@ -2,6 +2,8 @@ package com.baich.authmgmt.service;
 
 import com.baich.authmgmt.model.UserInfo;
 
+import java.util.List;
+
 /**
  * Created By IDEA.
  * Author : BaiCH
@@ -12,5 +14,5 @@ import com.baich.authmgmt.model.UserInfo;
  * version : v1.0
  */
 public interface UserInfoService {
-    UserInfo get();
+    List<UserInfo> get();
 }

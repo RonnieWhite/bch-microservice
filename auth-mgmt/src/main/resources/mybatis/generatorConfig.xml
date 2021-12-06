@@ -14,8 +14,8 @@
         <!--jdbc的数据库连接-->
         <!--这里是以变量的形式定义，具体的值在 application.yml 文件中-->
         <!--jdbc:mysql://localhost:3306/数据库名?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC-->
-        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
-                        connectionURL="jdbc:mysql://192.168.10.130:3306/auth_mgmt?serverTimezone=UTC"
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://192.168.232.130:3306/auth_mgmt?serverTimezone=UTC"
                         userId="root"
                         password="123456">
         </jdbcConnection>
@@ -36,7 +36,7 @@
         </javaModelGenerator>
 
         <!-- targetPackage 和 targetProject：生成的 mapper 文件的包和位置 -->
-        <sqlMapGenerator targetPackage="com.baich.authmgmt.mapper"
+        <sqlMapGenerator targetPackage="mybatis.mapper.mgmt"
                          targetProject="src/main/resources">
             <!-- 针对数据库的一个配置，是否把 schema 作为字包名 -->
             <property name="enableSubPackages" value="false"/>

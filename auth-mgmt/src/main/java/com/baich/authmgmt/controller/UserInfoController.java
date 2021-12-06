@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Created By IDEA.
@@ -26,7 +27,7 @@ public class UserInfoController {
 
     @GetMapping("/get")
     public String get() {
-        UserInfo userInfo = userInfoService.get();
-        return userInfo.toString();
+        List<UserInfo> userInfoList = userInfoService.get();
+        return userInfoList.toString();
     }
 }

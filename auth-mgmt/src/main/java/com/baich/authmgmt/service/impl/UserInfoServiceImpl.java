@@ -2,10 +2,12 @@ package com.baich.authmgmt.service.impl;
 
 import com.baich.authmgmt.mapper.UserInfoMapper;
 import com.baich.authmgmt.model.UserInfo;
+import com.baich.authmgmt.model.UserInfoExample;
 import com.baich.authmgmt.service.UserInfoService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Created By IDEA.
@@ -22,8 +24,12 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Resource
     private UserInfoMapper userInfoMapper;
 
-    @Override
-    public UserInfo get() {
-        return userInfoMapper.selectByPrimaryKey(1);
+    //    @Override
+    public List<UserInfo> get() {
+
+        UserInfoExample userInfoExample = new UserInfoExample();
+        UserInfoExample.Criteria criteria = userInfoExample.createCriteria();
+        criteria.andUserIdEqualTo(1);
+        return userInfoMapper.selectByExample(userInfoExample);
     }
 }

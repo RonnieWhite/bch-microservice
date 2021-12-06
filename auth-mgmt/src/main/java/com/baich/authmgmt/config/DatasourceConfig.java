@@ -1,6 +1,9 @@
 package com.baich.authmgmt.config;
 
 import com.zaxxer.hikari.HikariDataSource;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.mybatis.spring.SqlSessionFactoryBean;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
@@ -8,7 +11,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 import javax.sql.DataSource;
 
@@ -22,12 +27,12 @@ import javax.sql.DataSource;
  * version : v1.0
  */
 @Configuration
-@MapperScan(basePackages = {"com.baich.authmgmt.mapper"}, sqlSessionTemplateRef = "authJdbcTemplate")
-
+@MapperScan(basePackages = {"com.baich.authmgmt.mapper"}, sqlSessionTemplateRef = "authSqlSessionTemplate")
+@ConfigurationProperties(prefix = "spring.datasource.auth-mgmt-source")
 public class DatasourceConfig {
 
     private String url;
-    private String user;
+    private String username;
     private String password;
     private String driverClassName;
     private int minIdle;
@@ -38,12 +43,10 @@ public class DatasourceConfig {
 
     @Bean(name = "authDatasource")
     @Primary
-    @ConfigurationProperties(prefix = "spring.datasource.auth-mgmt-source")
     public DataSource authDataSource() {
-//        DataSource dataSource = new DruidDataSource();
         HikariDataSource hikariDataSource = new HikariDataSource();
         hikariDataSource.setJdbcUrl(url);
-        hikariDataSource.setUsername(user);
+        hikariDataSource.setUsername(username);
         hikariDataSource.setPassword(password);
         hikariDataSource.setDriverClassName(driverClassName);
         hikariDataSource.setMinimumIdle(minIdle);
@@ -61,12 +64,12 @@ public class DatasourceConfig {
         this.url = url;
     }
 
-    public String getUser() {
-        return user;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -133,6 +136,26 @@ public class DatasourceConfig {
     @Bean(name = "authJdbcTemplate")
     public JdbcTemplate authJdbcTemplate(@Qualifier("authDatasource") DataSource dataSource) {
         return new JdbcTemplate(dataSource);
+    }
+
+    @Bean(name = "authSqlSessionFactory")
+    public SqlSessionFactory sqlSessionFactory(@Qualifier("authDatasource") DataSource dataSource) throws Exception {
+        SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
+        bean.setDataSource(dataSource);
+        bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mybatis/mapper/mgmt/*.xml"));
+        return bean.getObject();
+    }
+
+
+    @Bean(name = "authTransactionMapper")
+    public DataSourceTransactionManager transactionManager(@Qualifier("authDatasource") DataSource dataSource) {
+        return new DataSourceTransactionManager(dataSource);
+    }
+
+
+    @Bean(name = "authSqlSessionTemplate")
+    public SqlSessionTemplate sqlSessionTemplate(@Qualifier("authSqlSessionFactory") SqlSessionFactory sqlSessionFactory) {
+        return new SqlSessionTemplate(sqlSessionFactory);
     }
 
 }
