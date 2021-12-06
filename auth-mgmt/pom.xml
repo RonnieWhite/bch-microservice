@@ -45,11 +45,6 @@
             <artifactId>pagehelper-spring-boot-starter</artifactId>
         </dependency>
 
-<!--        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid</artifactId>
-        </dependency>-->
-
     </dependencies>
     <build>
         <plugins>
@@ -71,7 +66,7 @@
                     <dependency>
                         <groupId>mysql</groupId>
                         <artifactId>mysql-connector-java</artifactId>
-                        <version>${mysql.version}</version>
+                        <version>${mysql5.version}</version>
                     </dependency>
                 </dependencies>
             </plugin>
