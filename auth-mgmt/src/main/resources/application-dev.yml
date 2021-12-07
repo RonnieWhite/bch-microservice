@@ -15,3 +15,11 @@ spring:
       testQuery: SELECT 1
       poolPreparedStatements: true
       maxPoolPreparedStatementPerConnectionSize: 20
+  application:
+    name: auth-mgmt-center
+  cloud:
+    nacos:
+      config:
+        server-addr: 192.168.232.130:8848
+      discovery:
+        server-addr: 192.168.232.130:8848
