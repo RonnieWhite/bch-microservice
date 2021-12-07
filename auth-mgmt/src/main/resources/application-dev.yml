@@ -16,7 +16,7 @@ spring:
       poolPreparedStatements: true
       maxPoolPreparedStatementPerConnectionSize: 20
   application:
-    name: auth-mgmt-center
+    name: auth-mgmt-provider
   cloud:
     nacos:
       config:

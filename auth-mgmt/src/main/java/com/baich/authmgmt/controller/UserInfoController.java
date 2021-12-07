@@ -3,9 +3,7 @@ package com.baich.authmgmt.controller;
 import com.baich.authmgmt.model.UserInfo;
 import com.baich.authmgmt.service.UserInfoService;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -31,5 +29,11 @@ public class UserInfoController {
     public String get() {
         List<UserInfo> userInfoList = userInfoService.get();
         return userInfoList.toString();
+    }
+
+    @GetMapping(value = "/echo/{string}")
+    public String echo(@PathVariable String string) {
+        return "Hello Nacos Discovery " + string;
+
     }
 }

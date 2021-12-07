@@ -1,0 +1,14 @@
+server:
+  port: 7777
+spring:
+  application:
+    name: daily-affairs-consumer
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.232.130:8848
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.232.130:3306/affairs?characterEncoding=utf8&useSSL=false
+    username: root
+    password: 123456
