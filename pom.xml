@@ -6,6 +6,7 @@
     <modules>
         <module>auth-mgmt</module>
         <module>daily-affairs</module>
+        <module>independent-server</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
